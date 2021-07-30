@@ -1,0 +1,60 @@
+{
+  "name": "steam-balance-tracker",
+  "version": "0.0.1",
+  "description": "steam-balance-tracker",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "scripts": {
+    "postinstall": "npm run build",
+    "start:prod": "node dist/index.js",
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "pretest": "npm run rebuild",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "zicoz18 <zicoz18@ku.edu.tr>",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^3.4.0",
+    "@loopback/core": "^2.16.0",
+    "@loopback/cron": "^0.5.2",
+    "@loopback/repository": "^3.6.0",
+    "@loopback/rest": "^9.3.0",
+    "@loopback/rest-explorer": "^3.3.0",
+    "@loopback/service-proxy": "^3.2.0",
+    "loopback-connector-mongodb": "^5.5.0",
+    "loopback-connector-rest": "^3.7.0",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.4.0",
+    "source-map-support": "^0.5.19",
+    "@loopback/testlab": "^3.4.0",
+    "@types/node": "^10.17.59",
+    "typescript": "~4.2.4"
+  }
+}
