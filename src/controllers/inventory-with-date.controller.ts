@@ -1,35 +1,45 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
-import { Inventory, InventoryWithDate } from '../models';
-import { InventoryWithDateRepository } from '../repositories';
+import {Inventory, InventoryWithDate} from '../models';
+import {InventoryWithDateRepository} from '../repositories';
+import {UpdateInventoryService} from '../services';
 
 export class InventoryWithDateController {
   constructor(
     @repository(InventoryWithDateRepository)
     public inventoryWithDateRepository: InventoryWithDateRepository,
+
+    @service(UpdateInventoryService)
+    protected updateInventoryService: UpdateInventoryService,
   ) { }
+
+  /* CUSTOM ENDPOINTS */
+  @post('/inventory-with-dates/current-price')
+  @response(200, {
+    description: 'InventoryWithDate model instance',
+    content: {'application/json': {schema: getModelSchemaRef(InventoryWithDate)}},
+  })
+  async createCurrentPrice(
+  ): Promise<InventoryWithDate | void> {
+    return await this.updateInventoryService.update();
+  }
 
   @post('/inventory-with-dates')
   @response(200, {
     description: 'InventoryWithDate model instance',
-    content: { 'application/json': { schema: getModelSchemaRef(InventoryWithDate) } },
+    content: {'application/json': {schema: getModelSchemaRef(InventoryWithDate)}},
   })
   async create(
     @requestBody({
@@ -50,7 +60,7 @@ export class InventoryWithDateController {
   @get('/inventory-with-dates/count')
   @response(200, {
     description: 'InventoryWithDate model count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async count(
     @param.where(InventoryWithDate) where?: Where<InventoryWithDate>,
@@ -65,7 +75,7 @@ export class InventoryWithDateController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(InventoryWithDate, { includeRelations: true }),
+          items: getModelSchemaRef(InventoryWithDate, {includeRelations: true}),
         },
       },
     },
@@ -79,13 +89,13 @@ export class InventoryWithDateController {
   @patch('/inventory-with-dates')
   @response(200, {
     description: 'InventoryWithDate PATCH success count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(InventoryWithDate, { partial: true }),
+          schema: getModelSchemaRef(InventoryWithDate, {partial: true}),
         },
       },
     })
@@ -100,13 +110,13 @@ export class InventoryWithDateController {
     description: 'InventoryWithDate model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(InventoryWithDate, { includeRelations: true }),
+        schema: getModelSchemaRef(InventoryWithDate, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(InventoryWithDate, { exclude: 'where' }) filter?: FilterExcludingWhere<InventoryWithDate>
+    @param.filter(InventoryWithDate, {exclude: 'where'}) filter?: FilterExcludingWhere<InventoryWithDate>
   ): Promise<InventoryWithDate> {
     return this.inventoryWithDateRepository.findById(id, filter);
   }
@@ -120,7 +130,7 @@ export class InventoryWithDateController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(InventoryWithDate, { partial: true }),
+          schema: getModelSchemaRef(InventoryWithDate, {partial: true}),
         },
       },
     })
@@ -157,7 +167,7 @@ export class InventoryWithDateController {
         description: 'Inventory belonging to InventoryWithDate',
         content: {
           'application/json': {
-            schema: { type: 'array', items: getModelSchemaRef(Inventory) },
+            schema: {type: 'array', items: getModelSchemaRef(Inventory)},
           },
         },
       },

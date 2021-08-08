@@ -1,5 +1,5 @@
-import { inject, lifeCycleObserver, LifeCycleObserver } from '@loopback/core';
-import { juggler } from '@loopback/repository';
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
 
 const config = {
   name: 'Steam',
@@ -38,7 +38,7 @@ export class SteamDataSource extends juggler.DataSource
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.Steam', { optional: true })
+    @inject('datasources.config.Steam', {optional: true})
     dsConfig: object = config,
   ) {
     super(dsConfig);

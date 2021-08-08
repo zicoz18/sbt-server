@@ -1,10 +1,10 @@
-import { inject } from '@loopback/core';
-import { CronJob, cronJob } from '@loopback/cron';
-import { repository } from '@loopback/repository';
-import { HttpErrors } from '@loopback/rest';
-import { InventoryItem, InventoryItemRelations, InventoryWithDate, ItemPriceWithDate } from '../models';
-import { InventoryRepository, InventoryWithDateRepository, ItemNameRepository, ItemPriceWithDateRepository } from '../repositories';
-import { SteamService } from '../services';
+import {inject} from '@loopback/core';
+import {CronJob, cronJob} from '@loopback/cron';
+import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {InventoryItem, InventoryItemRelations, InventoryWithDate, ItemPriceWithDate} from '../models';
+import {InventoryRepository, InventoryWithDateRepository, ItemNameRepository, ItemPriceWithDateRepository} from '../repositories';
+import {SteamService} from '../services';
 
 @cronJob()
 export class UpdateInventory extends CronJob {
@@ -34,7 +34,7 @@ export class UpdateInventory extends CronJob {
       // cronTime: '0 12 * * * *', // Everyday at 12.00 (sanırım her saatin 12. dakikasinda update'liyor şuanda)
       // cronTime: '0 0 11 * * ?', // everday at 11
       // cronTime: '0 0 11 * * *', // everday at 11
-      cronTime: '0 11 * * *', // everday at 11
+      cronTime: '5 11 * * *', // everday at 11
       start: true,
     });
   }
@@ -42,7 +42,7 @@ export class UpdateInventory extends CronJob {
   async performMyJob() {
     const currentDate = new Date();
     const inventory = await this.inventoryRepository.findOne({
-      where: { name: 'ziya' },
+      where: {name: 'ziya'},
       include: [{
         relation: 'inventoryItems',
         scope: {
