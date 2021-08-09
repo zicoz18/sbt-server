@@ -1,9 +1,10 @@
-import { /* inject, */ BindingScope, inject, injectable} from '@loopback/core';
+import { /* inject, */ BindingScope, inject, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {SteamService} from '.';
 import {InventoryItem, InventoryItemRelations, InventoryWithDate, ItemPriceWithDate} from '../models';
 import {InventoryRepository, InventoryWithDateRepository, ItemNameRepository, ItemPriceWithDateRepository} from '../repositories';
+import {TelegramBotService} from './telegram-bot.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UpdateInventoryService {
@@ -22,6 +23,9 @@ export class UpdateInventoryService {
 
     @repository(ItemPriceWithDateRepository)
     public itemPriceWithDateRepository: ItemPriceWithDateRepository,
+
+    @service(TelegramBotService)
+    protected telegramBotService: TelegramBotService,
   ) { }
 
   async update() {
@@ -63,6 +67,11 @@ export class UpdateInventoryService {
         const createdInventoryWithDate = await this.inventoryWithDateRepository.create(inventoryWithDate);
         // console.log(`Successfully update at ${currentDate}\n\nCreated ItemPricesWithDate: \n${createdItemPricesWithDate} \n\nCreatedInventoryWithDate: \n${createdInventoryWithDate}\n\n`);
         console.log(`Database Updated mannually at ${currentDate}`);
+        // const botToken = '1937849578:AAEMn7h8bHLHL1et9HtMeCtIXgev-rPAQm0';
+        // const chatId = '-543218313';
+        const message = `Balance: ${inventoryBalance}\nUpdated at ${currentDate}.`
+        await this.telegramBotService.sendMessage(message);
+        // await axios.get(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${message}`);
         return createdInventoryWithDate;
       } catch (error) {
         // throw new HttpErrors[422]('Cannot create instances.');
