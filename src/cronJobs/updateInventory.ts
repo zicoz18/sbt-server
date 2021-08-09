@@ -34,7 +34,7 @@ export class UpdateInventory extends CronJob {
       // cronTime: '0 12 * * * *', // Everyday at 12.00 (sanırım her saatin 12. dakikasinda update'liyor şuanda)
       // cronTime: '0 0 11 * * ?', // everday at 11
       // cronTime: '0 0 11 * * *', // everday at 11
-      cronTime: '5 11 * * *', // everday at 11
+      cronTime: '5 14 * * *', // everday at 14
       start: true,
     });
   }
