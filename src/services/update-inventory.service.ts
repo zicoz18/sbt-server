@@ -67,14 +67,10 @@ export class UpdateInventoryService {
         const createdInventoryWithDate = await this.inventoryWithDateRepository.create(inventoryWithDate);
         // console.log(`Successfully update at ${currentDate}\n\nCreated ItemPricesWithDate: \n${createdItemPricesWithDate} \n\nCreatedInventoryWithDate: \n${createdInventoryWithDate}\n\n`);
         console.log(`Database Updated mannually at ${currentDate}`);
-        // const botToken = '1937849578:AAEMn7h8bHLHL1et9HtMeCtIXgev-rPAQm0';
-        // const chatId = '-543218313';
         const message = `Balance: ${inventoryBalance}\nUpdated at ${currentDate}.`
         await this.telegramBotService.sendMessage(message);
-        // await axios.get(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${message}`);
         return createdInventoryWithDate;
       } catch (error) {
-        // throw new HttpErrors[422]('Cannot create instances.');
         console.log(error)
       }
     } else {
