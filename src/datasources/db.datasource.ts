@@ -1,14 +1,17 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+import * as dotenv from 'dotenv';
 
+
+dotenv.config();
 const config = {
   name: 'db',
   connector: 'mongodb',
-  url: 'mongodb+srv://zicoz18:XOtgz3cJxXqAounu@cluster0.mwg4u.mongodb.net/SteamBalanceTracker?retryWrites=true&w=majority',
+  url: `mongodb+srv://zicoz18:${process.env.DB_PASSWORD}@cluster0.mwg4u.mongodb.net/SteamBalanceTracker?retryWrites=true&w=majority`,
   host: 'localhost',
   port: 27017,
   user: 'zicoz18',
-  password: 'XOtgz3cJxXqAounu',
+  password: `${process.env.DB_PASSWORD}`,
   database: 'SteamBalanceTracker',
   useNewUrlParser: true
 };
