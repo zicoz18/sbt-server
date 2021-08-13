@@ -1,6 +1,8 @@
 # Steam-balance-tracker-server (SBT-server)
 This is an application that executes a cronJob with a Rest API support.
 
+API: https://steam-balance-tracker-server.herokuapp.com/
+
 ## Before starting the application
 ItemName, InventoryItem and Inventory datas should be created and logicly related. (These values should not be changed.)
 
